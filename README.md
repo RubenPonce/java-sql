@@ -54,18 +54,31 @@ VALUES ('The Shire', 'Bilbo Baggins', '1 Hobbit-Hole in Bag end','111', 'Middle 
 
 
 ### update _Bilbo Baggins_ record so that the postal code changes to _"11122"_.
-> This can be done with UPDATE and WHERE clauses
+> UPDATE customers
+SET postalcode = 11122
+WHERE contactname = 'Bilbo Baggins'
 
 ### list orders grouped by customer showing the number of orders per customer. _Rattlesnake Canyon Grocery_ should have 7 orders.
-> This can be done with SELECT, COUNT, JOIN and GROUP BY clauses. Your count should focus on a field in the Orders table, not the Customer table
+> SELECT  customername, COUNT(orderid) AS OrdersPerCustomer
+FROM orders o JOIN customers c
+ON o.customerid = c.customerid
+GROUP BY c.ContactName
 
 > There is more information about the COUNT clause on [W3 Schools](https://www.w3schools.com/sql/sql_count_avg_sum.asp)
 
 ### list customers names and the number of orders per customer. Sort the list by number of orders in descending order. _Ernst Handel_ should be at the top with 10 orders followed by _QUICK-Stop_, _Rattlesnake Canyon Grocery_ and _Wartian Herkku_ with 7 orders each.
-> This can be done by adding an ORDER BY clause to the previous answer
+> SELECT  customername, COUNT(orderid) AS OrdersPerCustomer
+FROM orders o JOIN customers c
+ON o.customerid = c.customerid
+GROUP BY c.ContactName
+ORDER BY OrdersPerCustomer DESC
 
 ### list orders grouped by customer's city showing number of orders per city. Returns 58 Records with _Aachen_ showing 2 orders and _Albuquerque_ showing 7 orders.
-> This is very similar to the previous two queries, however, it focuses on the City rather than the CustomerName
+> SELECT  c.city, COUNT(orderid) AS OrdersPerCity
+FROM orders o JOIN customers c
+ON o.customerid = c.customerid
+GROUP BY c.city
+ORDER BY OrdersPerCity DESC
 
 ## Stretch Goals
 
